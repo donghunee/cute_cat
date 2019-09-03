@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, ScrollView, Text, StyleSheet,TouchableOpacity} from 'react-native';
+import {View, ScrollView,Text, StyleSheet,TouchableOpacity} from 'react-native';
 import MasonryList from "react-native-masonry-list"        
 import {SafeAreaView, getActiveChildNavigationOptions} from 'react-navigation';
 import ListHeader from '../components/ListHeader'

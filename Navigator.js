@@ -1,10 +1,13 @@
 import React from 'react';
-import {TouchableOpacity}from 'react-native'
+import {TouchableOpacity,ActivityIndicator}from 'react-native'
 import {createAppContainer,
         createBottomTabNavigator,
         createStackNavigator } from "react-navigation"
 import ListScreen from './screens/ListScreen'
+import CameraScreen from './screens/CameraScreen'
 import {Ionicons} from '@expo/vector-icons'
+import CameraHeader from './components/CameraHeader'
+import CheckScreen from './screens/CheckScreen'
 
 const TabNavigator = createBottomTabNavigator({
     ListScreen: {
@@ -12,11 +15,26 @@ const TabNavigator = createBottomTabNavigator({
                     //해당 탭의 옵션 중
         navigationOptions: {
                         // '아이콘 설정'을 합니다.
-            tabBarIcon: ({tintColor}) => {
+            tabBarIcon: () => {
                                 //tabBarOptions에서 color을 받아와 아이콘에 적용해서 리턴합니다.
-                return <Ionicons name='ios-apps' size={25} color={'#fddb00'}/>
+                    
+                         return <Ionicons name='ios-apps' size={25} color={'#fddb00'}/>                         
+    						// 만약 isLoaded가 true라면 Forecast 컴포넌트를 출력하고, 아니라면 로딩화면을 띄워줘.
+                     
             }
         }
+    },
+    CameraScreen: {
+        screen: () => null,
+        navigationOptions: {
+            tabBarIcon: () => {
+                return <Ionicons name='ios-camera' size={25} color={'#fddb00'}/>
+            },
+            tabBarOnPress: ({navigation}) => {
+                navigation.navigate('Camera')
+            }
+        }
+
     }
 },{
             //하단 탭을 커스텀 할 수 있는 옵션 중
@@ -53,16 +71,31 @@ const AppNavigator = createStackNavigator (
                     style={{marginRight:20}}
                     onPress={screenProps.imageUpload}
                     activeOpacity={0.8}
+                    disabled={screenProps.isupload? true: false}
                     hitSlop={{top:2, bottom:2, left:2, right: 2}}>
-                    <Ionicons name="ios-image" size={25} color={'#fddb00'}></Ionicons>
+                    {
+                        screenProps.isupload ? <ActivityIndicator color={"#fddb00"} /> : <Ionicons name="ios-image" size={25} color={'#fddb00'}></Ionicons>
+                    }
                 </TouchableOpacity>
             })
+        },
+        Camera: {
+            screen: CameraScreen,
+            navigationOptions:{
+                header: <CameraHeader />,
+            }
+        },
+        Check: {
+            screen: CheckScreen,
+             navigationOptions:{
+                header: <CameraHeader />,
+            }
         }
         // View: ViewScreen,  
     },
     {
         initialRouteName: 'Tab',
-        mode: 'modal',
+        mode: '',
         headerMode: 'float'
     }
 )
