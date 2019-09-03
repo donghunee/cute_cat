@@ -1,4 +1,4 @@
-CuteCat
+# CuteCat
 
 귀여운 고양이 사진 모음 앱.
 
